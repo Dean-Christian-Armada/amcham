@@ -2,84 +2,135 @@ from django.db import models
 import re
 # Create your models here.
 
-class Company(models.Model):
-	name = models.CharField(max_length=50, null=True, blank=True)
-	description = models.TextField(max_length=50, null=True, blank=True)
-	website = models.CharField(max_length=50, null=True, blank=True)
-	email = models.CharField(max_length=50, null=True, blank=True)
-	phone = models.CharField(max_length=50, null=True, blank=True)
-	fax = models.CharField(max_length=50, null=True, blank=True)
-	mobile = models.CharField(max_length=50, null=True, blank=True)
-	street_1 = models.CharField(max_length=100, null=True, blank=True)
-	street_2 = models.CharField(max_length=100, null=True, blank=True)
-	city = models.CharField(max_length=50, null=True, blank=True)
-	country = models.CharField(max_length=50, null=True, blank=True)
-	postal_code = models.CharField(max_length=50, null=True, blank=True)
-	state = models.CharField(max_length=50, null=True, blank=True)
-	US_address_1 = models.CharField(max_length=100, null=True, blank=True)
-	US_address_2 = models.CharField(max_length=100, null=True, blank=True)
-	US_city = models.CharField(max_length=50, null=True, blank=True)
-	US_zip = models.CharField(max_length=50, null=True, blank=True)
-	US_state = models.CharField(max_length=50, null=True, blank=True)
-	nationality = models.CharField(max_length=50, null=True, blank=True)
-	tin = models.CharField(max_length=50, null=True, blank=True)
-	annual_revenue = models.CharField(max_length=50, null=True, blank=True)
-
-	def __str__(self):
-		# return str(self.id)
-		return self.name
-
 class AltRepresentative(models.Model):
-	first_name = models.CharField(max_length=50, null=True, blank=True)
-	# middle_name = models.CharField(max_length=50, null=True, blank=True)
-	last_name = models.CharField(max_length=50, null=True, blank=True)
-	telephone = models.CharField(max_length=50, null=True, blank=True)
-	mobile = models.CharField(max_length=50, null=True, blank=True)
-	email = models.CharField(max_length=50, null=True, blank=True)
+	first_name = models.CharField(max_length=50, default=None)
+	last_name = models.CharField(max_length=50, default=None)
+	telephone = models.CharField(max_length=50, default=None, blank=True, null=True)
+	mobile = models.CharField(max_length=50, default=None, blank=True, null=True)
+	email = models.CharField(max_length=50, default=None, blank=True, null=True)
 
 	def __str__(self):
-		# return str(self.id)
-		return "%s %s" % (self.first_name, self.last_name)
+		name = "%s %s" % (self.first_name, self.last_name)
+		return name
 
 class ExecRepresentative(models.Model):
-	first_name = models.CharField(max_length=50, null=True, blank=True)
-	# middle_name = models.CharField(max_length=50, null=True, blank=True)
-	last_name = models.CharField(max_length=50, null=True, blank=True)
-	telephone = models.CharField(max_length=50, null=True, blank=True)
-	mobile = models.CharField(max_length=50, null=True, blank=True)
-	email = models.CharField(max_length=50, null=True, blank=True)
+	first_name = models.CharField(max_length=50, default=None)
+	last_name = models.CharField(max_length=50, default=None)
+	telephone = models.CharField(max_length=50, default=None, blank=True, null=True)
+	mobile = models.CharField(max_length=50, default=None, blank=True, null=True)
+	email = models.CharField(max_length=50, default=None, blank=True, null=True)
 
 	def __str__(self):
-		# return str(self.id)
-		return "%s %s" % (self.first_name, self.last_name)
+		name = "%s %s" % (self.first_name, self.last_name)
+		return name
+
+class BloodType(models.Model):
+	blood_type = models.CharField(max_length=5, default=None, unique=True)
+
+	def __str__(self):
+		return self.blood_type
+
+class City(models.Model):
+	city = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.city.encode('ascii', errors='replace')
+
+class Country(models.Model):
+	country = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.country
+
+class Email(models.Model):
+	email = models.CharField(max_length=100, default=None, unique=True)
+
+	def __str__(self):
+		return self.email.encode('ascii', errors='replace')
+
+class Gender(models.Model):
+	gender = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.gender
+
+class MembershipDate(models.Model):
+	membership_date = models.DateField(unique=True)
+
+class Nationality(models.Model):
+	nationality = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.nationality
+
+class Position(models.Model):
+	position = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.position
+
+class PostalCode(models.Model):
+	postal_code = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.postal_code.encode('ascii', errors='replace')
+
+class ReferredBy(models.Model):
+	referred_by = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.referred_by
+
+class State(models.Model):
+	state = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.state
+
+class Suffix(models.Model):
+	suffix = models.CharField(max_length=50, default=None, unique=True)
+
+	def __str__(self):
+		return self.suffix
+
+# class USAddress(models.Model):
+# 	us_address = models.CharField(max_length=50, default=None, unique=True)
+
+class Company(models.Model):
+	company = models.CharField(max_length=100, default=None, unique=True)
+	description = models.TextField(null=True, blank=True)
+	website = models.CharField(max_length=50, null=True, blank=True, default=None)
+	street_1 = models.CharField(max_length=100, null=True, blank=True, default=None)
+	street_2 = models.CharField(max_length=100, null=True, blank=True, default=None)
+	city = models.ForeignKey('City', default=None)
+	country = models.ForeignKey('Country', default=1)
+	postal_code = models.ForeignKey('PostalCode', default=None)
+	state = models.ForeignKey('State', default=2)
+	nationality = models.ForeignKey('Nationality', default=1)
+	us_address_1 = models.CharField(max_length=100, null=True, blank=True, default=None)
+	us_address_2 = models.CharField(max_length=100, null=True, blank=True, default=None)
+	us_city = models.ForeignKey('City', related_name='us_city', default=None)
+	us_zip = models.ForeignKey('PostalCode', related_name='us_zip', default=None)
+	us_state = models.ForeignKey('State', related_name='us_state', default=None)
+	tin = models.CharField(max_length=50, null=True, blank=True, default=None)
+	annual_revenue = models.CharField(max_length=50, null=True, blank=True, default=None)
+
+	def __str__(self):
+		return self.company.encode('ascii', errors='replace')
+
 
 class Member(models.Model):
-	first_name = models.CharField(max_length=50, null=True, blank=True)
-	middle_name = models.CharField(max_length=50, null=True, blank=True)
-	last_name = models.CharField(max_length=50, null=True, blank=True)
-	membership_date = models.DateField(null=True, blank=True)
-	position = models.CharField(max_length=50, null=True, blank=True)
-	email = models.CharField(max_length=50, null=True, blank=True)
-	mobile = models.CharField(max_length=50, null=True, blank=True)
-	country = models.CharField(max_length=50, null=True, blank=True)
-	street_1 = models.CharField(max_length=100, null=True, blank=True)
-	street_2 = models.CharField(max_length=100, null=True, blank=True)
-	city = models.CharField(max_length=100, null=True, blank=True)
-	postal_code = models.CharField(max_length=100, null=True, blank=True)
-	state = models.CharField(max_length=50, null=True, blank=True)
-	citizenship = models.CharField(max_length=50, null=True, blank=True)
-	birthday = models.DateField(null=True, blank=True)
-	gender = models.CharField(max_length=50, null=True, blank=True)
-	blood_type = models.CharField(max_length=50, null=True, blank=True)
-	suffix = models.CharField(max_length=50, null=True, blank=True)
-	referred_by = models.CharField(max_length=50, null=True, blank=True)
-	company = models.ForeignKey('Company', default=None)
-	alt_representative = models.ForeignKey('AltRepresentative', default=None)
-	exec_representative = models.ForeignKey('ExecRepresentative', default=None)
-
-	def __str__(self):
-		# return str(self.id)
-		return "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
-
-	def name(self):
-		return "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
+	first_name = models.CharField(max_length=50, default=None)
+	middle_name = models.CharField(max_length=50, default=None)
+	last_name = models.CharField(max_length=50, default=None)
+	position = models.ForeignKey('Position', default=None)
+	personal_email = models.ForeignKey('Email', default=None)
+	company_email = models.ForeignKey('Email', default=None, related_name='company_email')
+	telephone = models.CharField(max_length=50, default=None)
+	fax = models.CharField(max_length=50, default=None)
+	mobile = models.CharField(max_length=50, default=None)
+	citizenship = models.ForeignKey('Nationality', default=1)
+	birthday = models.DateField(default=None)
+	gender = models.ForeignKey('Gender', default=1)
+	blood_type = models.ForeignKey('BloodType', default=None)
+	suffix = models.ForeignKey('Suffix', default=None)
