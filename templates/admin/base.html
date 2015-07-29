@@ -86,6 +86,32 @@
     {% block footer %}<div id="footer"></div>{% endblock %}
 </div>
 <!-- END Container -->
-
+<script type="text/javascript">
+    var position = '';
+    var citizenship = '';
+    var company = '';
+    var gender = '';
+    var blood_type = '';
+    var suffix = '';
+    var city = '';
+    var country = '';
+    var state = '';
+    var nationality = '';
+    var label = $("#changelist .actions label:nth-of-type(2)");
+    {% if 'position' in request.GET %}var position = '&position={{ request.GET.position }}';{% endif %}
+    {% if 'citizenship' in request.GET %}var citizenship = '&citizenship={{ request.GET.citizenship }}';{% endif %}
+    {% if 'company' in request.GET %}var company = '&company={{ request.GET.company }}';{% endif %}
+    {% if 'gender' in request.GET %}var gender = '&gender={{ request.GET.gender }}';{% endif %}
+    {% if 'blood_type' in request.GET %}var blood_type = '&blood_type={{ request.GET.blood_type }}';{% endif %}
+    {% if 'suffix' in request.GET %}var suffix = '&suffix={{ request.GET.suffix }}';{% endif %}
+    {% if 'city' in request.GET %}var city = '&city={{ request.GET.city }}';{% endif %}
+    {% if 'country' in request.GET %}var country = '&country={{ request.GET.country }}';{% endif %}
+    {% if 'state' in request.GET %}var state = '&state={{ request.GET.state }}';{% endif %}
+    {% if 'nationality' in request.GET %}var nationality = '&nationality={{ request.GET.nationality }}';{% endif %}
+    params = position+citizenship+company+gender+blood_type+suffix+city+country+state+nationality;
+    url = '{% url "staff:navigation_autocomplete" %}?';
+    var search_view = url+params;
+</script>
+<script type="text/javascript" src="{% static 'admin/js/main.js' %}"></script>
 </body>
 </html>

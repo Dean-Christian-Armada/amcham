@@ -5,9 +5,16 @@ import re
 class AltRepresentative(models.Model):
 	first_name = models.CharField(max_length=50, default=None)
 	last_name = models.CharField(max_length=50, default=None)
+	full_name = models.CharField(max_length=100, default=None)
 	telephone = models.CharField(max_length=50, default=None, blank=True, null=True)
 	mobile = models.CharField(max_length=50, default=None, blank=True, null=True)
 	email = models.CharField(max_length=50, default=None, blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		# if self.date_added != None:
+		# 	self.date_modified = datetime.datetime.today()
+		self.full_name = self.first_name+' '+self.last_name
+		super(AltRepresentative, self).save(*args, **kwargs)
 
 	def __str__(self):
 		name = "%s %s" % (self.first_name, self.last_name)
@@ -16,9 +23,16 @@ class AltRepresentative(models.Model):
 class ExecRepresentative(models.Model):
 	first_name = models.CharField(max_length=50, default=None)
 	last_name = models.CharField(max_length=50, default=None)
+	full_name = models.CharField(max_length=100, default=None)
 	telephone = models.CharField(max_length=50, default=None, blank=True, null=True)
 	mobile = models.CharField(max_length=50, default=None, blank=True, null=True)
 	email = models.CharField(max_length=50, default=None, blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		# if self.date_added != None:
+		# 	self.date_modified = datetime.datetime.today()
+		self.full_name = self.first_name+' '+self.last_name
+		super(ExecRepresentative, self).save(*args, **kwargs)
 
 	def __str__(self):
 		name = "%s %s" % (self.first_name, self.last_name)
@@ -49,7 +63,7 @@ class Email(models.Model):
 		return self.email.encode('ascii', errors='replace')
 
 class Gender(models.Model):
-	gender = models.CharField(max_length=50, default=None, unique=True)
+	gender = models.CharField(max_length=50, default=None, null=True, blank=True, unique=True)
 
 	def __str__(self):
 		return self.gender
@@ -64,10 +78,10 @@ class Nationality(models.Model):
 		return self.nationality
 
 class Position(models.Model):
-	position = models.CharField(max_length=50, default=None, unique=True)
+	position = models.CharField(max_length=100, default=None, unique=True)
 
 	def __str__(self):
-		return self.position
+		return self.position.encode('ascii', errors='replace')
 
 class PostalCode(models.Model):
 	postal_code = models.CharField(max_length=50, default=None, unique=True)
@@ -123,6 +137,7 @@ class Member(models.Model):
 	first_name = models.CharField(max_length=50, default=None)
 	middle_name = models.CharField(max_length=50, default=None)
 	last_name = models.CharField(max_length=50, default=None)
+	company = models.ForeignKey('Company', default=None)
 	position = models.ForeignKey('Position', default=None)
 	personal_email = models.ForeignKey('Email', default=None)
 	company_email = models.ForeignKey('Email', default=None, related_name='company_email')
@@ -130,7 +145,26 @@ class Member(models.Model):
 	fax = models.CharField(max_length=50, default=None)
 	mobile = models.CharField(max_length=50, default=None)
 	citizenship = models.ForeignKey('Nationality', default=1)
-	birthday = models.DateField(default=None)
+	birthday = models.DateField(null=True, blank=True, default=None)
 	gender = models.ForeignKey('Gender', default=1)
 	blood_type = models.ForeignKey('BloodType', default=None)
 	suffix = models.ForeignKey('Suffix', default=None)
+
+	def __str__(self):
+		first_name = self.first_name
+		middle_name = self.middle_name
+		last_name = self.last_name
+		full_name = "%s %s %s" % (first_name, middle_name, last_name)
+		if full_name == '  ':
+			full_name = '-'
+		return full_name
+
+	def full_name(self):
+		first_name = self.first_name
+		middle_name = self.middle_name
+		last_name = self.last_name
+		full_name = "%s %s %s" % (first_name, middle_name, last_name)
+		if full_name == '  ':
+			full_name = '-'
+		return full_name
+	full_name.short_description = 'Full Name'

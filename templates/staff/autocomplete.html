@@ -1,0 +1,28 @@
+{% if members %}
+	<table>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Company</th>
+			<th>Personal Email</th>
+			<th>Company Email</th>
+			<th>Mobile</th>
+			<th>Telephone</th>
+			<th>Fax</th>
+		</tr>
+	{% for member in members %}
+		<tr>
+			<td><a class="" href="?q={{ member.first_name }}">{{ member.first_name }}: </a></td>
+			<td><a class="" href="?q={{ member.last_name }}">{{ member.last_name }}: </a></td>
+			<td><a class="" href="?q={{ member.company }}">{{ member.company }} </a></td>
+			<td>{{ member.personal_email }} </td>
+			<td>{{ member.company_email }} </td>
+			<td>{{ member.mobile }} </td>
+			<td>{{ member.telephone }} </td>
+			<td>{{ member.fax }} </td>
+		</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<strong><center>NO RESULTS FOUND</center></strong>
+{% endif %}
