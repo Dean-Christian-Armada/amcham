@@ -1,3 +1,4 @@
+$('[data-toggle="tooltip"]').tooltip({ html: true });
 $('#searchbar').keydown(function(e){ 
 	if( e.which == '13' ){
 	  $("#changelist-search").submit(); 

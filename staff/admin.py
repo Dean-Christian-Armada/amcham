@@ -2,8 +2,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from import_export import resources, widgets
 from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin, DEFAULT_FORMATS
+from import_export.formats import base_formats
 from import_export import fields
 from . models import *
+import calendar
 # Register your models here.
 
 class MemberInline(admin.TabularInline):
@@ -37,6 +39,8 @@ class CompanyFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -60,6 +64,10 @@ class CompanyFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -88,6 +96,8 @@ class PositionFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -111,6 +121,10 @@ class PositionFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -138,6 +152,8 @@ class CitizenshipFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -161,6 +177,10 @@ class CitizenshipFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -188,6 +208,8 @@ class GenderFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -211,6 +233,10 @@ class GenderFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -238,6 +264,8 @@ class BloodTypeFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -261,6 +289,10 @@ class BloodTypeFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -288,6 +320,8 @@ class SuffixFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -311,6 +345,10 @@ class SuffixFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -338,6 +376,8 @@ class CityFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -361,6 +401,10 @@ class CityFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)	
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)		
 		else:
 			pass
 
@@ -388,6 +432,8 @@ class CountryFilter(admin.SimpleListFilter, Variables):
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -411,6 +457,10 @@ class CountryFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -438,6 +488,8 @@ class StateFilter(admin.SimpleListFilter, Variables):
 		country = request.GET.get('country')
 		postal_code = request.GET.get('postal_code')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -461,6 +513,10 @@ class StateFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -488,6 +544,8 @@ class PostalCodeFilter(admin.SimpleListFilter, Variables):
 		country = request.GET.get('country')
 		state = request.GET.get('state')
 		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -511,6 +569,10 @@ class PostalCodeFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__state__state__exact=state)
 		if nationality or nationality == '':
 			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -538,6 +600,8 @@ class NationalityFilter(admin.SimpleListFilter, Variables):
 		country = request.GET.get('country')
 		state = request.GET.get('state')
 		postal_code = request.GET.get('postal_code')
+		birthday = request.GET.get('birthday')
+		membership_date = request.GET.get('membership_date')
 
 		app = Variables.AppObject
 
@@ -561,6 +625,10 @@ class NationalityFilter(admin.SimpleListFilter, Variables):
 			app = app.filter(company__state__state__exact=state)
 		if postal_code or postal_code == '':
 			app = app.filter(company__postal_code__postal_code__exact=postal_code)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)			
 		else:
 			pass
 
@@ -573,21 +641,175 @@ class NationalityFilter(admin.SimpleListFilter, Variables):
 		if param or param == '':
 			return queryset.filter(company__nationality__nationality=param)
 
+class BirthdayFilter(admin.SimpleListFilter, Variables):
+	title = _('Birthday')
+	parameter_name = 'birthday'
+
+	def lookups(self, request, model_admin):
+		position = request.GET.get('position')
+		citizenship = request.GET.get('citizenship')
+		company = request.GET.get('company')
+		gender = request.GET.get('gender')
+		blood_type = request.GET.get('blood_type')
+		suffix = request.GET.get('suffix')
+		city = request.GET.get('city')
+		country = request.GET.get('country')
+		state = request.GET.get('state')
+		postal_code = request.GET.get('postal_code')
+		nationality = request.GET.get('nationality')
+		membership_date = request.GET.get('membership_date')
+		birthday = []
+		choices = []
+
+		app = Variables.AppObject
+
+		if position or position == '':
+			app = app.filter(position__position__exact=position)
+		if citizenship or citizenship == '':
+			app = app.filter(citizenship__nationality__exact=citizenship)
+		if company or company == '':
+			app = app.filter(company__company__exact=company)
+		if gender or gender == '':
+			app = app.filter(gender__gender__exact=gender)
+		if blood_type or blood_type == '':
+			app = app.filter(blood_type__blood_type__exact=blood_type)
+		if suffix or suffix == '':
+			app = app.filter(suffix__suffix__exact=suffix)
+		if city or city == '':
+			app = app.filter(company__city__city__exact=city)
+		if country or country == '':
+			app = app.filter(company__country__country__exact=country)
+		if state or state == '':
+			app = app.filter(company__state__state__exact=state)
+		if postal_code or postal_code == '':
+			app = app.filter(company__postal_code__postal_code__exact=postal_code)
+		if nationality or nationality == '':
+			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)
+		if membership_date or membership_date == '':
+			app = app.filter(membership_date__year=membership_date)				
+		else:
+			pass
+		istinct = app.distinct().order_by('birthday')
+		for x in range(1,13):
+			# choices.append((x, "20's"))
+			choices.append((x, calendar.month_name[x]))
+		return choices
+
+	def queryset(self, request, queryset):
+		param = self.value()
+		if param or param == '':
+			return queryset.filter(birthday__month=param)
+
+class MembershipFilter(admin.SimpleListFilter, Variables):
+	title = _('Membership Date')
+	parameter_name = 'membership_date'
+
+	def lookups(self, request, model_admin):
+		position = request.GET.get('position')
+		citizenship = request.GET.get('citizenship')
+		company = request.GET.get('company')
+		gender = request.GET.get('gender')
+		blood_type = request.GET.get('blood_type')
+		suffix = request.GET.get('suffix')
+		city = request.GET.get('city')
+		country = request.GET.get('country')
+		state = request.GET.get('state')
+		postal_code = request.GET.get('postal_code')
+		nationality = request.GET.get('nationality')
+		birthday = request.GET.get('birthday')
+		membership = []
+
+		app = Variables.AppObject
+
+		if position or position == '':
+			app = app.filter(position__position__exact=position)
+		if citizenship or citizenship == '':
+			app = app.filter(citizenship__nationality__exact=citizenship)
+		if company or company == '':
+			app = app.filter(company__company__exact=company)
+		if gender or gender == '':
+			app = app.filter(gender__gender__exact=gender)
+		if blood_type or blood_type == '':
+			app = app.filter(blood_type__blood_type__exact=blood_type)
+		if suffix or suffix == '':
+			app = app.filter(suffix__suffix__exact=suffix)
+		if city or city == '':
+			app = app.filter(company__city__city__exact=city)
+		if country or country == '':
+			app = app.filter(company__country__country__exact=country)
+		if state or state == '':
+			app = app.filter(company__state__state__exact=state)
+		if postal_code or postal_code == '':
+			app = app.filter(company__postal_code__postal_code__exact=postal_code)
+		if nationality or nationality == '':
+			app = app.filter(company__nationality__nationality__exact=nationality)
+		if birthday or birthday == '':
+			app = app.filter(birthday__month=birthday)			
+		else:
+			pass
+
+		distinct = app.distinct().order_by('membership_date')
+		for distincts in distinct:
+			if distincts.membership_date != None:
+				print membership.append((distincts.membership_date.year, distincts.membership_date.year))
+		membership = set(membership)
+		membership = list(membership)
+		membership = sorted(membership)
+		return membership		
+		# return distinct.values_list('membership_date', 'membership_date')
+
+	def queryset(self, request, queryset):
+		param = self.value()
+		if param or param == '':
+			return queryset.filter(membership_date__year=param)
+
+
+class MemberResource(resources.ModelResource):
+	first_name = fields.Field(column_name='First Name', attribute='first_name' )
+	middle_name = fields.Field(column_name='Middle Name', attribute='middle_name' )
+	last_name = fields.Field(column_name='Last Name', attribute='last_name' )
+	membership_date = fields.Field(column_name='Membership Date', attribute='membership_date' )
+	company = fields.Field(column_name='Company', attribute='company__company' )
+	position = fields.Field(column_name='Position', attribute='position__position' )
+	personal_email = fields.Field(column_name='Personal Email', attribute='personal_email__email' )
+	company_email = fields.Field(column_name='Company Email', attribute='company_email__email' )
+	telephone = fields.Field(column_name='Telephone', attribute='telephone' )
+	fax = fields.Field(column_name='Fax', attribute='fax' )
+	mobile = fields.Field(column_name='Mobile', attribute='mobile' )
+	citizenship = fields.Field(column_name='citizenship', attribute='citizenship__nationality' )
+	birthday = fields.Field(column_name='Birthday', attribute='birthday' )
+	gender = fields.Field(column_name='Gender', attribute='gender__gender' )
+	blood_type = fields.Field(column_name='Blood Type', attribute='blood_type__blood_type' )
+	suffix = fields.Field(column_name='Suffix', attribute='suffix__suffix' )
+
+	class Meta:
+		model = Member
+		exclude = ('id', )
+		export_order = ('first_name', 'middle_name', 'last_name', 
+			'membership_date', 'company', 'position', 'personal_email', 
+			'company_email', 'telephone', 'fax', 'mobile', 'citizenship', 
+			'birthday', 'gender', 'blood_type', 'suffix',)
+
 
 class MemberAdmin(ImportExportActionModelAdmin):
+	resource_class = MemberResource
+	formats = ( base_formats.XLS, base_formats.CSV )
 	list_filter = (CompanyFilter, PositionFilter, CitizenshipFilter, GenderFilter, 
 					BloodTypeFilter, SuffixFilter, CityFilter, CountryFilter, StateFilter, 
-					PostalCodeFilter, NationalityFilter, )
+					PostalCodeFilter, NationalityFilter, BirthdayFilter, MembershipFilter)
 	list_display = ('full_name', 'company', 'company_email', 'telephone', 'fax', 'mobile', 
-					'personal_email', 'position', 'citizenship', 'birthday', 'gender', 
+					'personal_email', 'position', 'citizenship', 'membership_date','birthday', 'gender', 
 					'blood_type', 'suffix', 'company_website', 'company_description', 
 					'company_website', 'company_street_1', 'company_street_2', 'company_city', 
 					'company_country', 'company_postal_code', 'company_state', 
 					'company_nationality', 'company_us_address_1', 'company_us_address_2', 
 					'company_us_city', 'company_us_zip', 'company_us_state', 'company_tin', 
 					'company_annual_revenue',)
-	search_fields = ('first_name', 'last_name', 'mobile', 'telephone', 'fax', 'company', 'personal_email', 'company_email')
-	
+	search_fields = ('first_name', 'last_name', 'mobile', 'telephone', 'fax', 
+					'company__company', 'personal_email__email', 'company_email__email' )
+
 	def company_description(self, obj):
 		return obj.company.description
 
@@ -637,6 +859,8 @@ class MemberAdmin(ImportExportActionModelAdmin):
 		return obj.company.annual_revenue
 
 
+
+
 # admin.site.register(ExecRepresentative, ExecRepImport)
 # admin.site.register(AltRepresentative, AltRepImport)
 # admin.site.register(BloodType, BloodTypeImport)
@@ -669,6 +893,24 @@ admin.site.register(Company, CompanyAdmin)
 # 		# Remove string conversion to enable ascii
 # 		# 	val = str(val)
 # 		return self.model.objects.get(**{self.field: val})
+
+# class MemberResource(resources.ModelResource):
+# 	company = fields.Field(column_name='company', attribute='company', widget=NullImporter(Company, 'company', ))
+# 	position = fields.Field(column_name='position', attribute='position', widget=NullImporter(Position, 'position', ))
+# 	personal_email = fields.Field(column_name='personal_email', attribute='personal_email', widget=NullImporter(Email, 'email', ))
+# 	company_email = fields.Field(column_name='company_email', attribute='company_email', widget=NullImporter(Email, 'email', ))
+# 	citizenship = fields.Field(column_name='citizenship', attribute='citizenship', widget=NullImporter(Nationality, 'nationality', ))
+# 	gender = fields.Field(column_name='gender', attribute='gender', widget=NullImporter(Gender, 'gender', ))
+# 	blood_type = fields.Field(column_name='blood_type', attribute='blood_type', widget=NullImporter(BloodType, 'blood_type', ))
+# 	suffix = fields.Field(column_name='suffix', attribute='suffix', widget=NullImporter(Suffix, 'suffix', ))
+
+# 	class Meta:
+# 		model = Member
+# 		field = ['id', 'first_name', 'middle_name', 'last_name', 'membership_date', 
+# 				'telephone', 'fax', 'mobile', 'birthday']
+
+# class MemberImport(ImportExportModelAdmin):
+# 	resource_class = MemberResource
 
 # class CompanyResource(resources.ModelResource):
 # 	city = fields.Field(column_name='city', attribute='city', widget=NullImporter(City, 'city', ))
@@ -772,8 +1014,6 @@ admin.site.register(Company, CompanyAdmin)
 
 # class SuffixImport(ImportExportModelAdmin):
 # 	resource_class = SuffixResource
-
-
 
 # class MemberAdmin(admin.ModelAdmin):
 # 	list_filter = ('company', 'position', 'citizenship', 'gender', 'blood_type', 'suffix', 

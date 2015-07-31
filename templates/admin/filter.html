@@ -1,7 +1,7 @@
 {% load i18n %}
 <script type="text/javascript">
 var go_from_select = function(opt) {
-opt = opt.replace(/q=(.)*&/, '');
+opt = opt.replace(/&q=(.)*/, '');
 window.location = window.location.pathname + opt; };</script>
 <h3>{{ title }}</h3>
 <ul class="admin-filter-{{ title|cut:' ' }}">

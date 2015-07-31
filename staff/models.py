@@ -137,6 +137,7 @@ class Member(models.Model):
 	first_name = models.CharField(max_length=50, default=None)
 	middle_name = models.CharField(max_length=50, default=None)
 	last_name = models.CharField(max_length=50, default=None)
+	membership_date = models.DateField(null=True, blank=True, default=None)
 	company = models.ForeignKey('Company', default=None)
 	position = models.ForeignKey('Position', default=None)
 	personal_email = models.ForeignKey('Email', default=None)
@@ -157,7 +158,7 @@ class Member(models.Model):
 		full_name = "%s %s %s" % (first_name, middle_name, last_name)
 		if full_name == '  ':
 			full_name = '-'
-		return full_name
+		return full_name.encode('ascii', errors='replace')
 
 	def full_name(self):
 		first_name = self.first_name

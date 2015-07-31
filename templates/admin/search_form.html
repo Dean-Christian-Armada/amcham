@@ -3,7 +3,7 @@
 <div id="toolbar"><form id="changelist-search" action="" method="get">
 <div><!-- DIV needed for valid HTML -->
 <label for="searchbar"><img src="{% static "admin/img/icon_searchbox.png" %}" alt="Search" /></label>
-<input type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" />
+<input type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" data-toggle="tooltip" data-placement="right" title="Please take note that this searchbox is for searching first name, last name, mobile, telephone, fax, company, personal email and company email and will integrate with the filter when a filter is made.<br />  <br />Type a letter then click among the dropdown links that will pop-up" />
 <input type="submit" value="{% trans 'Search' %}" />
 {% if show_result_count %}
     <span class="small quiet">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %} <!-- ( --><a href="?{% if cl.is_popup %}_popup=1{% endif %}"><!-- {% if cl.show_full_result_count %}{% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}{% else %}{% trans "Show all" %}{% endif %} --><button type="button">Reset Table</button></a><!-- ) --></span>
