@@ -74,7 +74,7 @@
 
       {% block filters %}
         {% if cl.has_filters %}
-          <div id="changelist-filter">
+          <div id="changelist-filter" data-toggle="tooltip" data-placement="left" title="Please take note that the selection of each filters integrates once a filter value is selected on any filters">
             <h2>{% trans 'Filter' %}</h2>
             {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
           </div>
