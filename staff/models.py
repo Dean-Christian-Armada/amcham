@@ -65,8 +65,8 @@ class Email(models.Model):
 class Gender(models.Model):
 	gender = models.CharField(max_length=50, default=None, null=True, blank=True, unique=True)
 
-	def __str__(self):
-		return self.gender
+	# def __str__(self):
+	# 	return self.gender
 
 class MembershipDate(models.Model):
 	membership_date = models.DateField(unique=True)
@@ -130,7 +130,7 @@ class Company(models.Model):
 	annual_revenue = models.CharField(max_length=50, null=True, blank=True, default=None)
 
 	def __str__(self):
-		return self.company.encode('ascii', errors='replace')
+		return self.company.encode('ascii', errors='replace') 
 
 
 class Member(models.Model):

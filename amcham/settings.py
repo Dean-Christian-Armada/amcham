@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'amcham.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'amchamda_deanchrisarmada',
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     'USER': 'root',
     'PASSWORD': 'd3@narmada13',
     'HOST': 'localhost',
